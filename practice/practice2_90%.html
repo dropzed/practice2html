@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+<section id="feedback">
+    <h2>Coffee Blog</h2>
+    <form id="coffeeForm">
+        <table>
+            <tr>
+                <td><label for="name">Название напитка</label></td>
+                <td><input type="text" id="name" name="name" placeholder="Американо"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="type">Сорт кофе</label>
+                </td>
+                <td>
+                    <select id="type" name="sort">
+                        <option>Гватемала</option>
+                        <option>Южная Африка</option>
+                        <option>Индонезия</option>
+                        <option>Рашка100%</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Крепость обжарки</b>
+                </td>
+                <td>
+                    <label>
+                        <p style="font-weight: normal;"> <input type="radio" name="strong" value="Крепкая">Крепкая<br></p>
+                    </label>
+                    <label>
+                        <p style="font-weight: normal;"> <input type="radio" name="strong" value="Средняя">Средняя<br></p>
+                    </label>
+                    <label>
+                        <p style="font-weight: normal;"> <input type="radio" name="strong" value="Легкая">Легкая<br></p>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="imageUrl">Изображение</label>
+                </td>
+                <td>
+                    <input type="url" id="imageUrl" name="imageUrl" placeholder="https://image.com">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="name">Стоимость напитка</label></td>
+                <td><input type="text" id="cost" name="cost" placeholder="100"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="message">Описание</label>
+                </td>
+                <td>
+                    <textarea id="message" name="description" placeholder="Немного про напиток"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div class="submit-button-container">
+            <input type="submit"value="Добавить напиток" class="submit-button">
+        </div>
+    </form>
+    <table id="table">
+        <thead>
+        <tr>
+            <th>Изображение</th>
+            <th>Название</th>
+            <th>Сорт</th>
+            <th>Крепость обжарки</th>
+            <th>Стоимость</th>
+            <th>Описание</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+</section>
+
+<script>
+    const form = document.getElementById('coffeeForm');
+    const tableBody = document.getElementById('tableBody');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const newCoffee = {
+            name: formData.get('name'),
+            sort: formData.get('sort'),
+            strong: formData.get('strong'),
+            imageUrl: formData.get('imageUrl'),
+            cost: formData.get('cost'),
+            description: formData.get('description')
+        };
+
+        addCoffeeToTable(newCoffee);
+        form.reset();
+    });
+
+    function addCoffeeToTable(coffee) {
+        const row = document.createElement('tr');
+
+        const imageCell = document.createElement('td');
+        const image = document.createElement('img');
+        image.src = coffee.imageUrl;
+        image.alt = coffee.name;
+        image.style.width='100px'
+        imageCell.appendChild(image);
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = coffee.name;
+
+        const sortCell = document.createElement('td');
+        sortCell.textContent = coffee.sort;
+
+        const strongCell = document.createElement('td');
+        strongCell.textContent = coffee.strong;
+
+        const costCell = document.createElement('td');
+        costCell.textContent = coffee.cost;
+
+        const descriptionCell = document.createElement('td');
+        descriptionCell.textContent = coffee.description;
+
+        row.appendChild(imageCell);
+        row.appendChild(nameCell);
+        row.appendChild(sortCell);
+        row.appendChild(strongCell);
+        row.appendChild(costCell);
+        row.appendChild(descriptionCell);
+
+        tableBody.appendChild(row);
+    }
+</script>
+</body>
+</html>
